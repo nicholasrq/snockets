@@ -18,6 +18,7 @@ module.exports = class Snockets
     @options.staticRootUrl ?= '/'
     @options.src ?= '.'
     @options.async ?= true
+    @options.compiler ?= {}
     @cache = {}
     @concatCache = {}
     @depGraph = new DepGraph
@@ -487,8 +488,9 @@ module.exports.compilers = compilers =
         staticRootUrl: '/'
       _.extend opts, useropts
 
-      compileopts =
+      compileopts = _.extend {}, opts.compiler, {
         filename: sourcePath
+      }
 
       if opts.srcmap
         outname = "#{sourcePath}.js"
